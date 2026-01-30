@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Miso Soup | 女子商</title>
+    
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    
+    <!-- Babel (JSX compiler) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* カスタムスクロールバー非表示設定 */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const DailyMisoSoup = () => {
+            const [activeTab, setActiveTab] = useState('beauty');
+
+            // アイコンの再レンダリング用
+            useEffect(() => {
+                lucide.createIcons();
+            });
+
+            const benefits = {
+                beauty: {
+                    title: "美肌・ニキビ予防",
+                    desc: "ビタミン豊富な野菜で、内側からつるんとたまご肌。",
+                    color: "bg-[#fff0f5] text-[#d65f5f] border-[#ffdbdb]", 
+                    iconName: "sparkles"
+                },
+                diet: {
+                    title: "ダイエット・代謝UP",
+                    desc: "温かいお味噌汁でぽかぽか。巡りをよくしてスッキリ。",
+                    color: "bg-[#fff8e1] text-[#b38f00] border-[#ffe082]", 
+                    iconName: "heart"
+                },
+                health: {
+                    title: "便秘解消・デトックス",
+                    desc: "食物繊維たっぷり。お腹の中からキレイに。",
+                    color: "bg-[#f1f8e9] text-[#558b2f] border-[#dcedc8]", 
+                    iconName: "leaf"
+                }
+            };
+
+            return (
+                <div className="min-h-screen bg-[#fcfaf5] font-sans text-[#5d5d5d]">
+                    {/* Header */}
+                    <header className="fixed top-0 w-full bg-[#fcfaf5]/90 backdrop-blur-sm z-50 border-b border-[#e6e2d3] shadow-sm">
+                        <div className="max-w-md mx-auto px-4 py-3 flex justify-between items-center">
+                            <h1 className="text-xl font-bold text-[#8d6e63] flex items-center gap-2">
+                                <span className="bg-[#8d6e63] text-white px-2 py-1 rounded-full text-xs tracking-wider">女子商</span>
+                                <span className="tracking-tight">Daily Miso Soup</span>
+                            </h1>
+                            <a href="#" className="text-[#d65f5f] hover:text-[#b74b4b] transition-colors p-2 bg-white rounded-full shadow-sm">
+                                <i data-lucide="instagram" className="w-5 h-5"></i>
+                            </a>
+                        </div>
+                    </header>
+
+                    {/* Hero Section */}
+                    <section className="pt-24 pb-12 px-4 text-center max-w-md mx-auto">
+                        <div className="bg-white p-8 rounded-[2rem] shadow-xl border border-[#e6e2d3] relative overflow-hidden">
+                            {/* Decorative background circle */}
+                            <div className="absolute -top-10 -left-10 w-32 h-32 bg-[#fff8e1] rounded-full opacity-50"></div>
+                            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#f1f8e9] rounded-full opacity-50"></div>
+
+                            <div className="relative z-10">
+                                <div className="mb-4 inline-block bg-[#fff3e0] text-[#e65100] px-4 py-1.5 rounded-full text-sm font-bold border border-[#ffe0b2]">
+                                    ♨️ ほっこり、飲む美容液。
+                                </div>
+                                <h2 className="text-3xl font-bold mb-5 text-[#4e342e] leading-snug tracking-wide">
+                                    私をいたわる、<br />
+                                    <span className="text-[#e65100] border-b-4 border-[#ffcc80] inline-block pb-1">ご自愛お味噌汁</span>
+                                </h2>
+                                
+                                {/* Hero Image */}
+                                <div className="relative h-64 bg-[#f5f5f5] rounded-2xl mb-6 flex items-center justify-center overflow-hidden border-2 border-dashed border-[#d7ccc8] shadow-inner group">
+                                    <img 
+                                        src="https://images.unsplash.com/photo-1607528971899-2e89e6c0ec69?auto=format&fit=crop&q=80&w=1000" 
+                                        alt="温かい具だくさんの味噌汁" 
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                        onError={(e) => {
+                                            e.target.style.display = 'none'; 
+                                            e.target.nextSibling.style.display='flex';
+                                        }}
+                                    />
+                                    {/* Fallback if image fails */}
+                                    <div className="absolute inset-0 hidden items-center justify-center flex-col text-[#8d6e63]">
+                                        <i data-lucide="utensils" className="w-8 h-8 mb-2"></i>
+                                        <span className="text-sm font-bold">お味噌汁の写真</span>
+                                    </div>
+
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+                                    <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-[#8d6e63] shadow-sm">
+                                        今日のイメージ
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-center items-baseline gap-2 mb-6 text-[#5d4037]">
+                                    <span className="text-sm font-bold opacity-70">一杯</span>
+                                    <span className="text-5xl font-extrabold tracking-tighter">170</span>
+                                    <span className="text-lg font-bold">円</span>
+                                </div>
+
+                                <button className="w-full bg-[#e65100] text-white font-bold py-4 rounded-full shadow-md hover:bg-[#ef6c00] transition-transform active:scale-95 flex items-center justify-center gap-2">
+                                    本日の具材を見る <i data-lucide="arrow-right" className="w-5 h-5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Pain Points & Solution */}
+                    <section className="py-10 px-4 max-w-md mx-auto">
+                        <div className="bg-white/80 rounded-2xl p-6 shadow-sm border border-[#e6e2d3]">
+                            <h3 className="text-center font-bold text-lg mb-6 flex items-center justify-center gap-3 text-[#5d4037]">
+                                <span className="block w-2 h-2 rounded-full bg-[#d7ccc8]"></span>
+                                こんなお悩み、ありませんか？
+                                <span className="block w-2 h-2 rounded-full bg-[#d7ccc8]"></span>
+                            </h3>
+                            <div className="grid grid-cols-2 gap-3 mb-8">
+                                {['肌荒れが気になる', 'ダイエット中...', 'お昼は節約したい', '野菜足りてないかも'].map((item, i) => (
+                                    <div key={i} className="bg-[#fafafa] p-4 rounded-xl text-sm text-[#6d4c41] font-medium text-center border border-[#eeeeee] shadow-sm">
+                                        {item}
+                                    </div>
+                                ))}
+                            </div>
+                            
+                            <div className="text-center relative bg-[#fff8e1] p-6 rounded-xl border border-[#ffe082]">
+                                <p className="text-lg font-bold text-[#5d4037] leading-relaxed">
+                                    <span className="text-[#e65100]">Daily Miso Soup</span>なら<br/>
+                                    1杯で<span className="bg-white px-2 py-0.5 rounded mx-1 text-[#e65100] border border-[#ffcc80]">5大栄養素</span>が<br/>
+                                    手軽に摂れちゃいます。
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Benefits Tab */}
+                    <section className="py-10 px-4">
+                        <div className="max-w-md mx-auto">
+                            <h3 className="font-bold text-xl mb-6 text-center text-[#4e342e]">今日の気分は？</h3>
+                            <div className="flex gap-2 mb-4 overflow-x-auto pb-2 no-scrollbar px-1">
+                                {Object.keys(benefits).map((key) => (
+                                    <button
+                                        key={key}
+                                        onClick={() => setActiveTab(key)}
+                                        className={`flex-1 min-w-[100px] py-3 px-3 rounded-xl text-sm font-bold transition-all border ${
+                                            activeTab === key 
+                                                ? `${benefits[key].color.split(' ')[0]} ${benefits[key].color.split(' ')[1]} ${benefits[key].color.split(' ')[2]} shadow-md transform -translate-y-1` 
+                                                : 'bg-white text-[#8d6e63] border-[#e0e0e0]'
+                                        }`}
+                                    >
+                                        {key === 'beauty' ? 'つるんと美肌' : key === 'diet' ? 'すっきり痩せ' : '元気＆健康'}
+                                    </button>
+                                ))}
+                            </div>
+
+                            <div className={`p-6 rounded-2xl transition-colors border ${benefits[activeTab].color}`}>
+                                <div className="flex items-start gap-4">
+                                    <div className="bg-white/90 p-3 rounded-full shadow-sm text-current">
+                                        <i data-lucide={benefits[activeTab].iconName} className="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-lg mb-2">{benefits[activeTab].title}</h4>
+                                        <p className="text-sm opacity-90 leading-relaxed font-medium">{benefits[activeTab].desc}</p>
+                                    </div>
+                                </div>
+                                <div className="mt-5 pt-4 border-t border-black/5 flex justify-between items-center bg-white/50 p-3 rounded-lg">
+                                    <span className="text-xs font-bold opacity-70">おすすめ具材</span>
+                                    <span className="text-sm font-bold">
+                                        {activeTab === 'beauty' ? 'トマト・ほうれん草' : activeTab === 'diet' ? 'きのこ・わかめ' : '根菜・豆腐'}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* How To Use */}
+                    <section className="py-12 px-4 max-w-md mx-auto">
+                        <h3 className="text-center font-bold text-xl text-[#4e342e] mb-8 bg-white inline-block px-8 py-2 rounded-full border border-[#d7ccc8] mx-auto shadow-sm block">
+                            ご利用の流れ
+                        </h3>
+                        <div className="space-y-4">
+                            {[
+                                { step: 1, title: "カップを選ぶ", desc: "まずはカップを手に取ってね" },
+                                { step: 2, title: "具材をチョイス", desc: "バイキング形式！好きな具材を入れよう", note: "POPで効果をチェック！" },
+                                { step: 3, title: "お味噌とお湯を注ぐ", desc: "最後にお好みの味噌を溶かして完成！" }
+                            ].map((item, index) => (
+                                <div key={index} className="flex gap-4 items-center bg-white p-5 rounded-2xl shadow-sm border border-[#f5f5f5] relative overflow-hidden">
+                                    <div className="absolute top-0 left-0 w-1 h-full bg-[#d7ccc8]"></div>
+                                    <div className="bg-[#eceff1] w-10 h-10 rounded-full flex items-center justify-center text-[#546e7a] font-bold text-lg flex-shrink-0 font-serif">
+                                        {item.step}
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-[#5d4037]">{item.title}</h4>
+                                        <p className="text-xs text-[#8d6e63] mt-1">{item.desc}</p>
+                                        {item.note && <span className="text-xs text-[#e65100] font-bold mt-1 block bg-[#fff3e0] inline-block px-2 py-0.5 rounded">{item.note}</span>}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* Farmers & Quality */}
+                    <section className="py-12 px-4 bg-[#f1f8e9]">
+                        <div className="max-w-md mx-auto text-center">
+                            <div className="inline-block p-3 bg-white rounded-full shadow mb-4">
+                                <i data-lucide="leaf" className="w-6 h-6 text-[#558b2f]"></i>
+                            </div>
+                            <h3 className="font-bold text-xl text-[#33691e] mb-4">地元の野菜で、もっときれいに。</h3>
+                            <p className="text-sm text-[#558b2f] leading-loose mb-8 font-medium">
+                                Daily Miso Soupの具材は、<br/>
+                                学校近くの農家さんから直接仕入れた<br/>
+                                とれたて新鮮なお野菜です。
+                            </p>
+                            <div className="grid grid-cols-2 gap-4">
+                                {/* Farmer & Vegetable Photos */}
+                                <div className="bg-white h-40 rounded-xl overflow-hidden border-2 border-[#dcedc8] shadow-sm relative group">
+                                    <img 
+                                        src="https://images.unsplash.com/photo-1595814433015-e6f5ce69614e?auto=format&fit=crop&q=80&w=500" 
+                                        alt="農家さんの手元" 
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                    />
+                                    <div className="absolute bottom-0 left-0 right-0 bg-[#f1f8e9]/90 p-2 text-center border-t border-[#dcedc8]">
+                                        <span className="text-xs font-bold text-[#33691e] flex items-center justify-center gap-1">
+                                            <span>👨‍🌾</span> 愛情たっぷり
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="bg-white h-40 rounded-xl overflow-hidden border-2 border-[#dcedc8] shadow-sm relative group">
+                                    <img 
+                                        src="https://images.unsplash.com/photo-1610348725531-843dff563e2c?auto=format&fit=crop&q=80&w=500" 
+                                        alt="採れたての新鮮野菜" 
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                    />
+                                    <div className="absolute bottom-0 left-0 right-0 bg-[#f1f8e9]/90 p-2 text-center border-t border-[#dcedc8]">
+                                        <span className="text-xs font-bold text-[#33691e] flex items-center justify-center gap-1">
+                                            <span>🍅</span> 朝採れ野菜
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Info / Footer */}
+                    <footer className="bg-[#4e342e] text-[#d7ccc8] py-12 px-4">
+                        <div className="max-w-md mx-auto">
+                            <div className="flex items-center justify-center gap-2 mb-8">
+                                <span className="font-bold text-xl tracking-widest text-white">Daily Miso Soup</span>
+                            </div>
+                            
+                            <div className="bg-[#3e2723] rounded-xl p-6 mb-8 border border-[#5d4037]">
+                                <div className="space-y-4 text-sm">
+                                    <div className="flex items-start gap-3">
+                                        <i data-lucide="map-pin" className="w-5 h-5 text-[#ffcc80] flex-shrink-0"></i>
+                                        <p>女子商業高校 食堂内</p>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                        <i data-lucide="clock" className="w-5 h-5 text-[#ffcc80] flex-shrink-0"></i>
+                                        <p>お昼休み（12:XX 〜 13:XX）</p>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                        <i data-lucide="info" className="w-5 h-5 text-[#ffcc80] flex-shrink-0"></i>
+                                        <p>1杯 170円（税込）<br/><span className="text-xs opacity-70">※現金のみ対応</span></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a href="#" className="block w-full bg-white text-[#4e342e] font-bold py-3 rounded-full text-center shadow-lg mb-8 flex items-center justify-center gap-2 hover:bg-[#f5f5f5] transition-colors">
+                                <i data-lucide="instagram" className="w-5 h-5 text-[#d65f5f]"></i>
+                                Instagramをチェック
+                            </a>
+
+                            <p className="text-center text-xs opacity-50 font-serif">
+                                © 2024 Daily Miso Soup Project.
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<DailyMisoSoup />);
+    </script>
+</body>
+</html># misos
